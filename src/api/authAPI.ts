@@ -1,36 +1,41 @@
-import {instance, UserDomainType} from "./api";
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
-import {LoginParamsType, ResponseType} from "./types";
-
+import {AxiosResponse} from "axios";
+import {instance} from "./api";
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        const promise = instance.post<ResponseType<{userId?: number}>>('auth/login', data);
-        return promise;
+        return instance.post<LoginParamsType, AxiosResponse<GetMeResponseType<{userId: number}>>>('auth/login', data)
     },
-    logout() {
-        const promise = instance.delete<ResponseType<{userId?: number}>>('auth/login');
-        return promise;
-    },
-    me() {
-        const promise =  instance.get<ResponseType<{id: number; email: string; login: string}>>('auth/me');
-        return promise
+    logout(){
+        return instance.delete<ResponseType>('auth/me')
     }
 }
 
-/*
-export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params) => {
-    const { data } = await axios.post('/auth/login', params);
-    return data;
-});
+//types
+export type GetMeResponseType<D = {}> = {
+    _id: string;
+    email: string;
+    name: string;
+    avatar?: string;
+    publicCardPacksCount: number; // количество колод
+    created: Date;
+    updated: Date;
+    isAdmin: boolean;
+    verified: boolean; // подтвердил ли почту
+    rememberMe: boolean;
+    error?: string;
+    token: string
+    tokenDeathTime: number
+    data: D
+}
 
-export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params) => {
-    const { data } = await axios.post('/auth/register', params);
-    return data;
-});
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
 
-export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
-    const { data } = await axios.get('/auth/me');
-    return data;
-});*/
+export type ResponseType<D = {}> = {
+    error: string
+    info: string
+    data: D
+}

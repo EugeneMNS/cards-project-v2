@@ -1,106 +1,122 @@
 import React from 'react';
 import s from './Login.module.scss'
 import style from './InitCommonStyle.module.css'
-import {NavLink} from "react-router-dom";
-import {FormikHelpers, useFormik} from "formik";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../redux/store";
-import {authActions} from "./index";
-import {login} from "./auth-reducer";
+import {fetchLogin} from "./auth-reducer";
+import {useFormik} from "formik";
 
-type FormValuesType = {
-    email: string
-    password: string
-    rememberMe: boolean
+
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
 }
 
-export  const Login = () => {
+export interface StateType {
+    password: string;
+    showPassword: boolean;
+}
+
+export const Login = () => {
+
     const dispatch = useAppDispatch()
+    // const isLoggedIn = useAppSelector(selectIsLoggedIn)
+    // const error = useAppSelector(selectError)
+    const navigate = useNavigate()
 
     const formik = useFormik({
-        validate: (values) => {
-            if (!values.email) {
-                return {
-                    email: 'Email is required'
-                }
-            }
-            if (!values.password) {
-                return {
-                    password: 'Password is required'
-                }
-            }
-
-        },
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
         },
-        onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
-            const resultAction = await dispatch(authActions.login(values));
-
-            if  (login.rejected.match(resultAction)) {
-                if (resultAction.payload?.fieldsErrors?.length) {
-                    const error = resultAction.payload?.fieldsErrors[0];
-                    formikHelpers.setFieldError(error.field, error.error);
-                }
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
             }
+
+            if (!values.password) {
+                errors.password = 'Required';
+            } else if (values.password.length < 6) {
+                errors.password = 'Must be 6 characters or more';
+            }
+            return errors;
+        },
+        onSubmit: values => {
+            dispatch(fetchLogin(values))
+            formik.resetForm();
         },
     })
 
     return (
-            <div className={style.initComponentWrapper}>
-                <h2 className={style.title}>Playing cards</h2>
-                <h3 className={style.subtitle}>Sign In</h3>
-                <form onSubmit={formik.handleSubmit}>
+        <div className={style.initComponentWrapper}>
+            <h2 className={style.title}>Playing cards</h2>
+            <h3 className={style.subtitle}>Sign In</h3>
+            <form onSubmit={formik.handleSubmit}>
 
 
-                    <div className={style.formBox}>
+                <div className={style.formBox}>
 
-                        <label className={style.loginLabel}>Email<br/>
-                            <input
-                                className={style.Input}
-                                type="email"
-                                {...formik.getFieldProps("email")}
-                            />
-                        </label>
+                    <label className={style.loginLabel}>Email<br/>
+                        <input
+                            className={style.Input}
+                            type="email"
+                            {...formik.getFieldProps('email')}
+                        />
+                    </label>
+                    {
+                        formik.touched.email &&
+                        formik.errors.email
+                            ? <div style={{color:'red'}}>{formik.errors.email}</div>: null
+                    }
+                    {   formik.touched.password &&
+                    formik.errors.password
+                        ? <div style={{color:'red'}}>{formik.errors.password}</div>: null
+                    }
+                    <label className={style.loginLabel}>Password
+                        <input
+                            className={style.Input}
+                            type="password"
+                            name="password"
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                        />
+                    </label>
 
-                        <label className={style.loginLabel}>Password
-                            <input
-                                className={style.Input}
-                                type="password"
-                                {...formik.getFieldProps("password")}
-                            />
-                        </label>
-                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-                        <div className={s.CheckBoxWrapper}>
-                            <div>
-                                <label className={s.CheckBoxLabel}>
-                                    <input
-                                        type="checkbox"
-                                        {...formik.getFieldProps("rememberMe")}
-                                    />
-                                    Remember me
-                                </label>
-                            </div>
+                    <div className={s.CheckBoxWrapper}>
+                        <div>
+                            <label className={s.CheckBoxLabel}>
+                                <input
+                                    type="checkbox"
+                                    name="rememberMe"
+                                    onChange={formik.handleChange}
+                                    checked={formik.values.rememberMe}
+                                />
+                                Remember me
+                            </label>
                         </div>
                     </div>
-                    <div>
-                        <NavLink className={s.linkTransparent} to={'RECOVERY_PATH'}>
-                            Forgot password
-                        </NavLink>
-                    </div>
-                    <div>
-                        <button className={style.btnBlue}>Login</button>
-                    </div>
-                </form>
-                <p className={style.textLight}>Don't have an account?</p>
+                </div>
                 <div>
-                    <NavLink className={style.linkBlue} to={'REGISTER_PATH'}>
-                        Sign Up
+                    <NavLink className={s.linkTransparent} to={'RECOVERY_PATH'}>
+                        Forgot password
                     </NavLink>
                 </div>
+                <div>
+                    <button className={style.btnBlue}>Login</button>
+                </div>
+            </form>
+            <p className={style.textLight}>Don't have an account?</p>
+            <div>
+                <NavLink className={style.linkBlue} to={'REGISTER_PATH'}>
+                    Sign Up
+                </NavLink>
             </div>
+        </div>
     );
 };
 
-export default Login;
