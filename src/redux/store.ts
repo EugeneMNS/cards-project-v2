@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {authReducer} from "./slices/auth";
+import {authReducer} from "../LoginPage/auth-reducer";
 import {useDispatch} from "react-redux";
 
 const store = configureStore({

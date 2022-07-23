@@ -2,18 +2,56 @@ import React from 'react';
 import s from './Login.module.scss'
 import style from './InitCommonStyle.module.css'
 import {NavLink} from "react-router-dom";
+import {FormikHelpers, useFormik} from "formik";
+import {useAppDispatch} from "../redux/store";
+import {authActions} from "./index";
+import {login} from "./auth-reducer";
 
+type FormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
 
-const Login = () => {
-    function handleSubmit() {
+export  const Login = () => {
+    const dispatch = useAppDispatch()
 
-    }
+    const formik = useFormik({
+        validate: (values) => {
+            if (!values.email) {
+                return {
+                    email: 'Email is required'
+                }
+            }
+            if (!values.password) {
+                return {
+                    password: 'Password is required'
+                }
+            }
+
+        },
+        initialValues: {
+            email: '',
+            password: '',
+            rememberMe: false
+        },
+        onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const resultAction = await dispatch(authActions.login(values));
+
+            if  (login.rejected.match(resultAction)) {
+                if (resultAction.payload?.fieldsErrors?.length) {
+                    const error = resultAction.payload?.fieldsErrors[0];
+                    formikHelpers.setFieldError(error.field, error.error);
+                }
+            }
+        },
+    })
 
     return (
             <div className={style.initComponentWrapper}>
                 <h2 className={style.title}>Playing cards</h2>
                 <h3 className={style.subtitle}>Sign In</h3>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
 
 
                     <div className={style.formBox}>
