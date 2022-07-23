@@ -59,30 +59,25 @@ export  const Login = () => {
                         <label className={style.loginLabel}>Email<br/>
                             <input
                                 className={style.Input}
-                                value={'email'} //
                                 type="email"
-                                name="email"
-                               /* onChange={(e) => setEmail(e.currentTarget.value)}*/
+                                {...formik.getFieldProps("email")}
                             />
                         </label>
 
                         <label className={style.loginLabel}>Password
                             <input
                                 className={style.Input}
-                                value={'password'}//
                                 type="password"
-                                name="password"
-                                /*onChange={(e) => setPassword(e.currentTarget.value)}*/
+                                {...formik.getFieldProps("password")}
                             />
                         </label>
-
+                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         <div className={s.CheckBoxWrapper}>
                             <div>
                                 <label className={s.CheckBoxLabel}>
                                     <input
                                         type="checkbox"
-                                        name="rememberMe"
-                                       /* onChange={(e) => setRememberMe(e.currentTarget.checked)}*/
+                                        {...formik.getFieldProps("rememberMe")}
                                     />
                                     Remember me
                                 </label>

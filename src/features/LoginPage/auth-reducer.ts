@@ -1,6 +1,5 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {instance} from '../../api/api';
-import {RootState} from "../../redux/store";
 import {FieldErrorType, LoginParamsType} from "../../api/types";
 import {authAPI} from "../../api/authAPI";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../utils/error-utils";
@@ -60,8 +59,5 @@ export const slice = createSlice({
     }
 })
 
-//export const selectIsAuth = (state: RootState) => Boolean(state.auth.data);
-
-export const authReducer = slice.reducer;
-
-//export const { logout } = authSlice.actions;
+export const authReducer = slice.reducer
+export const {setIsLoggedIn} = slice.actions
