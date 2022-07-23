@@ -3,7 +3,7 @@ import s from './Login.module.scss'
 import style from './InitCommonStyle.module.css'
 import {NavLink} from "react-router-dom";
 import {FormikHelpers, useFormik} from "formik";
-import {useAppDispatch} from "../redux/store";
+import {useAppDispatch} from "../../redux/store";
 import {authActions} from "./index";
 import {login} from "./auth-reducer";
 

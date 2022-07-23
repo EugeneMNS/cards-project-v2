@@ -1,4 +1,4 @@
-import {rootReducer, store} from '../app/store'
+import {rootReducer, store} from '../redux/store'
 import {FieldErrorType} from '../api/types'
 
 
