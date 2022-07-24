@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {authReducer} from "../features/LoginPage/auth-reducer";
-import {useDispatch} from "react-redux";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 const store = configureStore({
     reducer:{
@@ -10,10 +10,10 @@ const store = configureStore({
 })
 export  type RootStateType = ReturnType<typeof store.getState>;
 
-export type RootState = ReturnType<typeof store.getState>;
 
 type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootStateType> = useSelector
 
 export default store

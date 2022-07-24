@@ -8,11 +8,14 @@ const slice = createSlice({
             isLoggedIn: false,
             token: '',
             status: 'idle',
-            error: null,
+            error: '',
         },
         reducers: {
             loggedIn(state, action: PayloadAction<boolean>) {
                 state.isLoggedIn = action.payload;
+            },
+            loginError(state, action: PayloadAction<string>){
+                state.error = action.payload;
             },
             getToken(state, action: PayloadAction<string>) {
                 state.token = action.payload;
@@ -35,6 +38,7 @@ export const fetchLogin = createAsyncThunk(
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
             console.log('Error: ', {...e})
+            dispatch(loginError(error))
            // dispatch(setAppStatus({status: 'failed'}))
         } finally {
             //dispatch(setAppStatus({status: 'idle'}))
@@ -59,5 +63,5 @@ export const fetchLogout = createAsyncThunk(
     }
 );
 
-export const {loggedIn, getToken} = slice.actions
+export const {loggedIn, getToken, loginError} = slice.actions
 export const authReducer = slice.reducer

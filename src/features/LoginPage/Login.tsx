@@ -2,9 +2,12 @@ import React from 'react';
 import s from './Login.module.scss'
 import style from './InitCommonStyle.module.css'
 import {NavLink, useNavigate} from "react-router-dom";
-import {useAppDispatch} from "../../redux/store";
-import {fetchLogin} from "./auth-reducer";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
+import {fetchLogin, loginError} from "./auth-reducer";
 import {useFormik} from "formik";
+import {Alert} from "@mui/material";
+import {Simulate} from "react-dom/test-utils";
+
 
 
 type FormikErrorType = {
@@ -22,7 +25,7 @@ export const Login = () => {
 
     const dispatch = useAppDispatch()
     // const isLoggedIn = useAppSelector(selectIsLoggedIn)
-    // const error = useAppSelector(selectError)
+    const error = useAppSelector((state)=>state.login.error)
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -52,6 +55,7 @@ export const Login = () => {
         },
     })
 
+
     return (
         <div className={style.initComponentWrapper}>
             <h2 className={style.title}>Playing cards</h2>
@@ -71,11 +75,11 @@ export const Login = () => {
                     {
                         formik.touched.email &&
                         formik.errors.email
-                            ? <div style={{color:'red'}}>{formik.errors.email}</div>: null
+                            ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null
                     }
-                    {   formik.touched.password &&
+                    {formik.touched.password &&
                     formik.errors.password
-                        ? <div style={{color:'red'}}>{formik.errors.password}</div>: null
+                        ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null
                     }
                     <label className={style.loginLabel}>Password
                         <input
@@ -86,7 +90,11 @@ export const Login = () => {
                             value={formik.values.password}
                         />
                     </label>
-
+                    {error && (
+                        <span>
+            <Alert severity="error">{error}</Alert>
+          </span>
+                    )}
                     <div className={s.CheckBoxWrapper}>
                         <div>
                             <label className={s.CheckBoxLabel}>
