@@ -1,5 +1,5 @@
 import s from './Profile.module.css';
-import emptyProfilePhoto from '../image/elon-musk-smoke.gif'
+import emptyProfilePhoto from '../../image/default-avatar.jpg'
 import React from 'react';
 
 
@@ -8,7 +8,7 @@ type ProfileInfoPropsType = {
     name: string
 }
 
-export const ProfileInfo = React.memo((props: ProfileInfoPropsType) => {
+export const ProfileInfo = (props: ProfileInfoPropsType) => {
 
 
 
@@ -29,10 +29,13 @@ export const ProfileInfo = React.memo((props: ProfileInfoPropsType) => {
                            accept=".jpg, .jpeg, .png"
                     />
 
-                    <img src={props.avatar ? props.avatar : emptyProfilePhoto}
+                    <img src={emptyProfilePhoto}
                          className={s.profile__photo}
                         // onClick={() => inRef.current?.click()}
                     />
+
+                    <div className={s.profile__textName}> User Name</div>
+
                 </div>
 
 
@@ -43,4 +46,4 @@ export const ProfileInfo = React.memo((props: ProfileInfoPropsType) => {
             </div>
         </div>
     )
-})
+}

@@ -11,10 +11,10 @@ export const ProfilePage = () => {
         <div className={s.container}>
 
             <div className={s.profile__info}>
-               {/* <ProfileInfo
+                <ProfileInfo
                     name={'profile.name'}
                     avatar={'profile.avatar'}
-                />*/}
+                />
             </div>
 
 
