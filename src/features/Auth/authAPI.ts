@@ -2,6 +2,9 @@ import {AxiosResponse} from "axios";
 import {instance} from "../../api/api";
 
 export const authAPI = {
+    me(){
+        return instance.post('auth/me', {})
+    },
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<GetMeResponseType<{userId: number}>>>('auth/login', data)
     },
