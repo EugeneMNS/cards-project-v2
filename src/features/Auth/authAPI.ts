@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios";
-import {instance} from "./api";
+import {instance} from "../../api/api";
 
 export const authAPI = {
     login(data: LoginParamsType) {

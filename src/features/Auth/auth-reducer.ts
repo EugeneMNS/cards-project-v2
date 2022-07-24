@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {authAPI, LoginParamsType} from "../../api/authAPI";
+import {authAPI, LoginParamsType} from "./authAPI";
 //import {setAppStatus} from "./AppReducer";
 
 const slice = createSlice({
