@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Login.module.scss'
 import style from './InitCommonStyle.module.css'
-import {NavLink, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {login, loginError} from "./auth-reducer";
 import {useFormik} from "formik";
@@ -24,7 +24,7 @@ export interface StateType {
 export const Login = () => {
 
     const dispatch = useAppDispatch()
-    // const isLoggedIn = useAppSelector(selectIsLoggedIn)
+    const isInitialized = useAppSelector((state) => state.login.isInitialized)
     const error = useAppSelector((state)=>state.login.error)
     const navigate = useNavigate()
 
@@ -55,6 +55,11 @@ export const Login = () => {
         },
     })
 
+
+
+    if (isInitialized) {
+        return <Navigate to={'/profile'}/>;
+    }
     return (
         <div className={style.initComponentWrapper}>
             <h2 className={style.title}>Playing cards</h2>

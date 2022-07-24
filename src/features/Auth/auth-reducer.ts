@@ -1,7 +1,16 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType} from "./authAPI";
-import {setIsInitialized} from "../../redux/appSlice";
 //import {setAppStatus} from "./AppReducer";
+
+/*const initializeApp = createAsyncThunk('auth/initializeApp', async (param, {dispatch}) => {
+    const res = await authAPI.me()
+    if (res.data.resultCode === 0) {
+        dispatch(setIsLoggedIn({value: true}))
+    } else {
+
+    }
+})*/
+
 
 export const login = createAsyncThunk(
     'auth/fetchLogin',
@@ -9,6 +18,7 @@ export const login = createAsyncThunk(
        // dispatch(setAppStatus({status: 'loading'}))
         try {
             const res = await authAPI.login(data);
+            dispatch(setIsInitialized({value: true}))
             dispatch(setIsLoggedIn({value:true}))
             dispatch(getToken(res.data.token))
            // dispatch(setAppStatus({status: 'succeeded'}))
@@ -31,6 +41,7 @@ export const logout = createAsyncThunk(
         //dispatch(setAppStatus({status: 'loading'}))
         try {
             await authAPI.logout();
+            dispatch(setIsInitialized({value:true}))
             dispatch(setIsLoggedIn({value:true}))
            // dispatch(setAppStatus({status: 'succeeded'}))
         } catch (err: any) {
@@ -46,11 +57,15 @@ const slice = createSlice({
         name: "auth",
         initialState: {
             isLoggedIn: false,
+            isInitialized: false,
             token: '',
             status: 'idle',
             error: '',
         },
         reducers: {
+            setIsInitialized: (state, action: PayloadAction<{value: boolean}>) => {
+                state.isInitialized = action.payload.value
+            },
             setIsLoggedIn(state, action: PayloadAction<{ value: boolean }>) {
                 state.isLoggedIn = action.payload.value
             },
@@ -69,9 +84,12 @@ const slice = createSlice({
                 .addCase(logout.fulfilled, (state) => {
                     state.isLoggedIn = false
                 })
+                /*.addCase(initializeApp.fulfilled, (state)=>{
+                    state.isInitialized = true
+                })*/
         }
     }
 )
 
-export const {setIsLoggedIn, getToken, loginError} = slice.actions
+export const {setIsInitialized,setIsLoggedIn, getToken, loginError} = slice.actions
 export const authReducer = slice.reducer

@@ -2,12 +2,17 @@ import React from 'react';
 import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo';
 import {useAppDispatch, useAppSelector} from "../../redux/store";
+import {Navigate} from "react-router-dom";
 
 
 export const ProfilePage = () => {
     const dispatch = useAppDispatch()
-    const isInitialized = useAppSelector((state) => state.app.isInitialized)
+    const isInitialized = useAppSelector((state) => state.login.isInitialized)
 
+
+    if (!isInitialized) {
+        return <Navigate to={'/login'}/>;
+    }
 
     return (
         <div className={s.container}>
