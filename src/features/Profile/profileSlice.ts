@@ -1,46 +1,32 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
-export type ProfileDataStateType = {
-    created: string
-    email: string
-    isAdmin: boolean
-    name: string
-    publicCardPacksCount: number
-    rememberMe: boolean
-    token: string
-    tokenDeathTime: number
-    updated: string
-    verified: boolean
-    avatar?: string
-    __v: number
-    _id: string
-}
-
-
-
-const initialState : ProfileDataStateType ={
-    created: '',
-    email: '',
-    isAdmin: false,
-    name: '',
+export type InitialProfileStateType = typeof initialProfileState;
+const initialProfileState = {
+    _id: "",
+    email: "",
+    name: "",
+    avatar: "",
     publicCardPacksCount: 0,
-    rememberMe: false,
-    token: '',
-    tokenDeathTime: 0,
-    updated: '',
+    created: "",
+    updated: "",
+    isAdmin: false,
     verified: false,
+    rememberMe: false,
+    error: "",
+    token: "",
+    tokenDeathTime: 0,
     __v: 0,
-    _id: ''
-}
+};
+
 
 
 
 const slice = createSlice({
         name: "profile",
-        initialState,
+        initialState : initialProfileState,
         reducers: {
-            setProfileData(state: ProfileDataStateType, action) {
+            setProfileData(state, action) {
                 state = action.payload
             },
         },

@@ -34,7 +34,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                         // onClick={() => inRef.current?.click()}
                     />
 
-                    <div className={s.profile__textName}> User Name</div>
+                    <div className={s.profile__textName}> {props.name}</div>
 
                 </div>
 

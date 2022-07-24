@@ -1,13 +1,15 @@
 import React from 'react';
 import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo';
-import {useAppDispatch, useAppSelector} from "../../redux/store";
+import {RootStateType, useAppDispatch, useAppSelector} from "../../redux/store";
 import {Navigate} from "react-router-dom";
+import {InitialProfileStateType} from "./profileSlice";
 
 
 export const ProfilePage = () => {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector((state) => state.login.isInitialized)
+    const profile = useAppSelector((state) => state.profile);
 
 
     if (!isInitialized) {
@@ -19,8 +21,8 @@ export const ProfilePage = () => {
 
             <div className={s.profile__info}>
                 <ProfileInfo
-                    name={'profile.name'}
-                    avatar={'profile.avatar'}
+                    name={profile.name}
+                    avatar={profile.avatar}
                 />
             </div>
 
