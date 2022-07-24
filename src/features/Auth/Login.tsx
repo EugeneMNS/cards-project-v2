@@ -77,19 +77,20 @@ export const Login = () => {
                         formik.errors.email
                             ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null
                     }
-                    {formik.touched.password &&
-                    formik.errors.password
-                        ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null
-                    }
+
                     <label className={style.loginLabel}>Password
                         <input
                             className={style.Input}
                             type="password"
-                            name="password"
+                            {...formik.getFieldProps('password')}
                             onChange={formik.handleChange}
                             value={formik.values.password}
                         />
                     </label>
+                    {formik.touched.password &&
+                    formik.errors.password
+                        ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null
+                    }
                     {error && (
                         <span>
             <Alert severity="error">{error}</Alert>
