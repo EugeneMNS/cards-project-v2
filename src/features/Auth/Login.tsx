@@ -55,7 +55,6 @@ export const Login = () => {
         },
     })
 
-
     return (
         <div className={style.initComponentWrapper}>
             <h2 className={style.title}>Playing cards</h2>
