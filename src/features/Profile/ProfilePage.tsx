@@ -1,10 +1,12 @@
 import React from 'react';
 import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo';
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 
 
 export const ProfilePage = () => {
-
+    const dispatch = useAppDispatch()
+    const isInitialized = useAppSelector((state) => state.app.isInitialized)
 
 
     return (

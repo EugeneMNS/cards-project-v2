@@ -3,7 +3,7 @@ import s from './Login.module.scss'
 import style from './InitCommonStyle.module.css'
 import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/store";
-import {fetchLogin, loginError} from "./auth-reducer";
+import {login, loginError} from "./auth-reducer";
 import {useFormik} from "formik";
 import {Alert} from "@mui/material";
 import {Simulate} from "react-dom/test-utils";
@@ -50,7 +50,7 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            dispatch(fetchLogin(values))
+            dispatch(login(values))
             formik.resetForm();
         },
     })
