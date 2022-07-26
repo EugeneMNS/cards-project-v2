@@ -25,7 +25,7 @@ export const Login = () => {
 
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector((state) => state.login.isInitialized)
-    const error = useAppSelector((state)=>state.login.error)
+    const error = useAppSelector((state)=>state.login.userData.error)
     const navigate = useNavigate()
 
     const formik = useFormik({

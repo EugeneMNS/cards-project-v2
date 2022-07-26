@@ -18,9 +18,9 @@ export const login = createAsyncThunk(
        // dispatch(setAppStatus({status: 'loading'}))
         try {
             const res = await authAPI.login(data);
-            dispatch(setIsInitialized({value: true}))
-            dispatch(setIsLoggedIn({value:true}))
             dispatch(getToken(res.data.token))
+            // @ts-ignore
+            dispatch(setUserData(res.data))
            // dispatch(setAppStatus({status: 'succeeded'}))
         } catch (e: any) {
             const error = e.response
@@ -41,8 +41,8 @@ export const logout = createAsyncThunk(
         //dispatch(setAppStatus({status: 'loading'}))
         try {
             await authAPI.logout();
-            dispatch(setIsInitialized({value:true}))
-            dispatch(setIsLoggedIn({value:true}))
+           // dispatch(setIsInitialized({value:true}))
+           // dispatch(setIsLoggedIn({value:true}))
            // dispatch(setAppStatus({status: 'succeeded'}))
         } catch (err: any) {
             console.log(err)
@@ -53,43 +53,54 @@ export const logout = createAsyncThunk(
     }
 );
 
+const userData ={
+    _id: "",
+    email: "",
+    name: "",
+    avatar: "",
+    publicCardPacksCount: 0,
+    created: "",
+    updated: "",
+    isAdmin: false,
+    verified: false,
+    rememberMe: false,
+    error: "",
+    token: "",
+    tokenDeathTime: 0,
+    __v: 0,
+}
+
 const slice = createSlice({
         name: "auth",
         initialState: {
             isLoggedIn: false,
             isInitialized: false,
-            token: '',
             status: 'idle',
-            error: '',
+            userData
         },
         reducers: {
-            setIsInitialized: (state, action: PayloadAction<{value: boolean}>) => {
-                state.isInitialized = action.payload.value
-            },
-            setIsLoggedIn(state, action: PayloadAction<{ value: boolean }>) {
-                state.isLoggedIn = action.payload.value
+            setUserData(state, action: PayloadAction<typeof userData>) {
+                state.userData = action.payload
             },
             loginError(state, action: PayloadAction<string>){
-                state.error = action.payload;
+                state.userData.error = action.payload;
             },
             getToken(state, action: PayloadAction<string>) {
-                state.token = action.payload;
+                state.userData.token = action.payload;
             }
         },
         extraReducers: builder => {
             builder
                 .addCase(login.fulfilled, (state) => {
                     state.isLoggedIn = true
+                    state.isInitialized = true
                 })
                 .addCase(logout.fulfilled, (state) => {
                     state.isLoggedIn = false
                 })
-                /*.addCase(initializeApp.fulfilled, (state)=>{
-                    state.isInitialized = true
-                })*/
         }
     }
 )
 
-export const {setIsInitialized,setIsLoggedIn, getToken, loginError} = slice.actions
+export const { getToken, loginError, setUserData} = slice.actions
 export const authReducer = slice.reducer
