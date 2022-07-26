@@ -17,8 +17,7 @@ export const login = createAsyncThunk(
     async (data: LoginParamsType, {dispatch}) => {
        // dispatch(setAppStatus({status: 'loading'}))
         try {
-            const res = await authAPI.login(data);
-            dispatch(getToken(res.data.token))
+            const res = await authAPI.auth(data);
             // @ts-ignore
             dispatch(setUserData(res.data))
            // dispatch(setAppStatus({status: 'succeeded'}))
@@ -85,9 +84,6 @@ const slice = createSlice({
             loginError(state, action: PayloadAction<string>){
                 state.userData.error = action.payload;
             },
-            getToken(state, action: PayloadAction<string>) {
-                state.userData.token = action.payload;
-            }
         },
         extraReducers: builder => {
             builder
@@ -102,5 +98,5 @@ const slice = createSlice({
     }
 )
 
-export const { getToken, loginError, setUserData} = slice.actions
+export const { loginError, setUserData} = slice.actions
 export const authReducer = slice.reducer

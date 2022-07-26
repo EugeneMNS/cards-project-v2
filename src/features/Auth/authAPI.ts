@@ -5,7 +5,7 @@ export const authAPI = {
     me(){
         return instance.post('auth/me', {})
     },
-    login(data: LoginParamsType) {
+    auth(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<GetMeResponseType<{userId: number}>>>('auth/login', data)
     },
     logout(){
@@ -18,17 +18,18 @@ export type GetMeResponseType<D = {}> = {
     _id: string;
     email: string;
     name: string;
-    avatar?: string;
-    publicCardPacksCount: number; // количество колод
+    avatar: string;
+    publicCardPacksCount: number;
     created: Date;
     updated: Date;
     isAdmin: boolean;
-    verified: boolean; // подтвердил ли почту
+    verified: boolean;
     rememberMe: boolean;
     error?: string;
     token: string
     tokenDeathTime: number
     data: D
+    __v: number,
 }
 
 export type LoginParamsType = {

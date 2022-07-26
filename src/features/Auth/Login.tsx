@@ -24,8 +24,8 @@ export interface StateType {
 export const Login = () => {
 
     const dispatch = useAppDispatch()
-    const isInitialized = useAppSelector((state) => state.login.isInitialized)
-    const error = useAppSelector((state)=>state.login.userData.error)
+    const isInitialized = useAppSelector((state) => state.auth.isInitialized)
+    const error = useAppSelector((state)=>state.auth.userData.error)
     const navigate = useNavigate()
 
     const formik = useFormik({

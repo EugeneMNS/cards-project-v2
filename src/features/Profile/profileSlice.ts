@@ -1,8 +1,11 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {authAPI} from "../Auth/authAPI";
+import {profileAPI} from "./profileAPI";
+import {useAppDispatch} from "../../redux/store";
 
 
-export type InitialProfileStateType = typeof initialProfileState;
-const initialProfileState = {
+
+const userData ={
     _id: "",
     email: "",
     name: "",
@@ -17,21 +20,48 @@ const initialProfileState = {
     token: "",
     tokenDeathTime: 0,
     __v: 0,
-};
+}
+
+
+export const changeUserName = createAsyncThunk('profile/changeUserName', async (name:string) => {
+    //thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+    try {
+        const res = await profileAPI.changeName(name);
+        if (res.data.error === '') {
+           // thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
+            return res.data.updatedUser;
+
+        } else {
+         //   return handleAsyncServerAppError(res.data, thunkAPI)
+        }
+    } catch (error) {
+      //  return handleAsyncServerNetworkError(error, thunkAPI)
+    }
+})
 
 
 
 
 const slice = createSlice({
         name: "profile",
-        initialState : initialProfileState,
+        initialState : {
+            userData,
+        },
         reducers: {
-            setProfileData(state, action) {
-                state = action.payload
+            setChangeUserName(state, action) {
+                state.userData = action.payload;
             },
         },
+        extraReducers: builder => {
+            builder
+                .addCase(changeUserName.fulfilled, (state, action) => {
+                    state.userData = action.payload
+                })
+        }
+
     }
 )
 
-export const {setProfileData} = slice.actions
+export const {setChangeUserName} = slice.actions
 export const profileSlice = slice.reducer
+

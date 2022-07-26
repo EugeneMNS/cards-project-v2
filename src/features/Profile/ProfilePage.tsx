@@ -3,13 +3,12 @@ import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo';
 import {RootStateType, useAppDispatch, useAppSelector} from "../../redux/store";
 import {Navigate} from "react-router-dom";
-import {InitialProfileStateType} from "./profileSlice";
 
 
 export const ProfilePage = () => {
     const dispatch = useAppDispatch()
-    const isInitialized = useAppSelector((state) => state.login.isInitialized)
-    const profile = useAppSelector((state) => state.profile);
+    const isInitialized = useAppSelector((state) => state.auth.isInitialized)
+    const profile = useAppSelector((state) => state.auth.userData);
 
 
     if (!isInitialized) {
