@@ -47,21 +47,17 @@ const slice = createSlice({
         initialState : {
             userData,
         },
-        reducers: {
-            setChangeUserName(state, action) {
-                state.userData = action.payload;
-            },
-        },
+        reducers: {},
         extraReducers: builder => {
             builder
                 .addCase(changeUserName.fulfilled, (state, action) => {
-                    state.userData = action.payload
+
                 })
         }
 
     }
 )
 
-export const {setChangeUserName} = slice.actions
+//export const {setChangeUserName} = slice.actions
 export const profileSlice = slice.reducer
 

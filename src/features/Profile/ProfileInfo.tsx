@@ -2,19 +2,16 @@ import s from './Profile.module.css';
 import emptyProfilePhoto from '../../image/default-avatar.jpg'
 import pencil from '../../image/pencil.png'
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
-import {useAppDispatch} from "../../redux/store";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 import { changeUserName} from "./profileSlice";
 import {TextField} from "@mui/material";
 
 
-type ProfileInfoPropsType = {
-    avatar: string
-    name: string
-}
 
-export const ProfileInfo = (props: ProfileInfoPropsType) => {
 
-    const [title, setTitle] = useState(props.name)
+export const ProfileInfo = () => {
+    const profile = useAppSelector((state) => state.auth.userData);
+    const [title, setTitle] = useState(profile.name)
 
     const [editProfileMode, setEditProfileMode] = useState(false);
 
@@ -38,23 +35,22 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
     }
     const onBlur = () => {
         setEditProfileMode(false)
-        if (title !== props.name) {
+        if (title !== profile.name) {
             dispatch(changeUserName(title))
         }
     }
-    // @ts-ignore
-    const onEnterPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onEnterPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode === 13) {
             setEditProfileMode(false)
-            if (title !== props.name) {
+            if (title !== profile.name) {
                 dispatch(changeUserName(title))
             }
         }
     }
 
     useEffect(() => {
-        setTitle(props.name)
-    }, [props.name])
+        setTitle(profile.name)
+    }, [profile.name])
 
     return (
         <div className={s.profile__infoPage}>
@@ -73,7 +69,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                            accept=".jpg, .jpeg, .png"
                     />
 
-                    <img src={props.avatar ? props.avatar : emptyProfilePhoto}
+                    <img src={profile.avatar ? profile.avatar : emptyProfilePhoto}
                          className={s.profile__photo}
                          onClick={() => inRef.current?.click()}
                     />
@@ -100,7 +96,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                     : <span onClick={() => {
                         setEditProfileMode(false)
                     }
-                    }>{props.name}
+                    }>{profile.name}
                         <img src={pencil} height={'13px'}
                              style={{display: 'inline-block', marginLeft: '10px'}}/>
                 </span>
