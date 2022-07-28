@@ -1,6 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType} from "./authAPI";
 import {changeUserName} from "../Profile/profileSlice";
+import {UserDomainType} from "../../api/api";
+import {setAppStatus} from "../../redux/appSlice";
 //import {setAppStatus} from "./AppReducer";
 
 /*const initializeApp = createAsyncThunk('auth/initializeApp', async (param, {dispatch}) => {
@@ -45,17 +47,17 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk(
     'auth/fetchLogout',
     async (_, {dispatch}) => {
-        //dispatch(setAppStatus({status: 'loading'}))
+        dispatch(setAppStatus({status: 'loading'}))
         try {
             await authAPI.logout();
             // dispatch(setIsInitialized({value:true}))
             // dispatch(setIsLoggedIn({value:true}))
-            // dispatch(setAppStatus({status: 'succeeded'}))
+             dispatch(setAppStatus({status: 'succeeded'}))
         } catch (err: any) {
             console.log(err)
-            //  dispatch(setAppStatus({status: 'failed'}))
+              dispatch(setAppStatus({status: 'failed'}))
         } finally {
-            // dispatch(setAppStatus({status: 'idle'}))
+             dispatch(setAppStatus({status: 'idle'}))
         }
     }
 );
@@ -98,6 +100,7 @@ const slice = createSlice({
             .addCase(login.rejected, (state, payload: any) => {
                 console.log(payload.payload.response.data.error)
                 state.userData.error = payload.payload.response.data.error
+
             })
             .addCase(logout.fulfilled, (state) => {
                 state.isLoggedIn = false
