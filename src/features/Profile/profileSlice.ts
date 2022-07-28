@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType} from "../Auth/authAPI";
 import {profileAPI} from "./profileAPI";
 import {useAppDispatch} from "../../redux/store";
-import {checkAuthMe, login, UserDataType} from "../Auth/auth-reducer";
+import {checkAuthMe, login, logout, UserDataType} from "../Auth/auth-reducer";
 
 
 
@@ -60,6 +60,9 @@ const slice = createSlice({
                 })
                 .addCase(login.fulfilled, (state, payload: any) => {
                     state.userData = payload.payload
+                })
+                .addCase(logout.fulfilled, (state) => {
+                    state.userData = {} as UserDataType
                 })
         }
 

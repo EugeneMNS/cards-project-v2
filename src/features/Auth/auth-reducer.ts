@@ -76,7 +76,7 @@ export type UserDataType = {
     error?: string;
 }
 
-const userData = {} as UserDataType
+const userData = {} as UserDataType ;
 
 const slice = createSlice({
     name: "auth",
@@ -101,6 +101,8 @@ const slice = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.isLoggedIn = false
+                state.isInitialized = false
+                state.userData = {} as UserDataType
             })
     }
 }

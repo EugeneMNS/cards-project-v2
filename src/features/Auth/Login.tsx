@@ -22,7 +22,6 @@ export interface StateType {
 }
 
 export const Login = () => {
-
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector((state) => state.auth.isInitialized)
     const error = useAppSelector((state)=>state.auth.userData.error)

@@ -5,10 +5,14 @@ import LogoutIcon from '../../image/Logout.png'
 import {NavLink} from 'react-router-dom';
 import {PACKS_LIST_PATH, PROFILE_PATH} from '../../Routes/RoutesConst';
 import React, {useEffect, useState} from 'react';
+import {logout} from "../Auth/auth-reducer";
 
 import {LinearProgress} from '@mui/material';
+import {useAppDispatch} from "../../redux/store";
 
 export const Header = () => {
+
+    const dispatch = useAppDispatch()
     const [buttonActive, setButtonActive] = useState<'profile' | 'packs-list' | 'logout'>('profile')
 
 
@@ -68,7 +72,7 @@ export const Header = () => {
                                 : s.btn
                         }
                                 onClick={() => {
-                                 //   dispatch(logOut())
+                                    dispatch(logout())
                                 }}
                         >
                             <img className={`${s.btnImg} ${s.btnLogout}`} src={LogoutIcon} alt="Logout"/>
