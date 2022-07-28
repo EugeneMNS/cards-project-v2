@@ -32,6 +32,7 @@ export const changeUserName = createAsyncThunk('profile/changeUserName', async (
             return res.data.updatedUser;
 
         } else {
+            return res.data
          //   return handleAsyncServerAppError(res.data, thunkAPI)
         }
     } catch (error) {
