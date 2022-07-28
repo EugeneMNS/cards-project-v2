@@ -81,14 +81,7 @@ const slice = createSlice({
         status: 'idle',
         userData
     },
-    reducers: {
-        setUserData(state, action: PayloadAction<typeof userData>) {
-            state.userData = action.payload
-        },
-        loginError(state, action: PayloadAction<string>) {
-            state.userData.error = action.payload;
-        },
-    },
+    reducers: {},
     extraReducers: builder => {
         builder
             .addCase(login.fulfilled, (state, payload) => {
@@ -114,5 +107,5 @@ const slice = createSlice({
 
 )
 
-export const {loginError, setUserData} = slice.actions
+export const {} = slice.actions
 export const authReducer = slice.reducer

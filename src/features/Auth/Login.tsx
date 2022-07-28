@@ -3,7 +3,7 @@ import s from './Login.module.scss'
 import style from './InitCommonStyle.module.css'
 import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/store";
-import {login, loginError} from "./auth-reducer";
+import {login} from "./auth-reducer";
 import {useFormik} from "formik";
 import {Alert} from "@mui/material";
 import {Simulate} from "react-dom/test-utils";
