@@ -1,26 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {authAPI} from "../Auth/authAPI";
+import {authAPI, LoginParamsType} from "../Auth/authAPI";
 import {profileAPI} from "./profileAPI";
 import {useAppDispatch} from "../../redux/store";
+import {checkAuthMe, login, UserDataType} from "../Auth/auth-reducer";
 
-
-
-const userData ={
-    _id: "",
-    email: "",
-    name: "",
-    avatar: "",
-    publicCardPacksCount: 0,
-    created: "",
-    updated: "",
-    isAdmin: false,
-    verified: false,
-    rememberMe: false,
-    error: "",
-    token: "",
-    tokenDeathTime: 0,
-    __v: 0,
-}
 
 
 export const changeUserName = createAsyncThunk('profile/changeUserName', async (name:string) => {
@@ -41,7 +24,7 @@ export const changeUserName = createAsyncThunk('profile/changeUserName', async (
 })
 
 
-
+const userData = {} as UserDataType
 
 const slice = createSlice({
         name: "profile",
@@ -51,8 +34,12 @@ const slice = createSlice({
         reducers: {},
         extraReducers: builder => {
             builder
-                .addCase(changeUserName.fulfilled, (state, action) => {
-
+                .addCase(changeUserName.fulfilled, (state, payload: any) => {
+                    console.log(payload)
+                    state.userData.name = payload.payload.updatedUser.name
+                })
+                .addCase(login.fulfilled, (state, payload: any) => {
+                    state.userData = payload.payload
                 })
         }
 

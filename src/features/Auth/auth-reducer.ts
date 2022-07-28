@@ -12,6 +12,11 @@ import {changeUserName} from "../Profile/profileSlice";
     }
 })*/
 
+export const checkAuthMe= createAsyncThunk(
+    'auth/checkAuthMe',
+    (data: LoginParamsType, {rejectWithValue}) => {
+        return authAPI.me().catch((error) => rejectWithValue(error))
+    })
 
 export const login = createAsyncThunk(
     'auth/fetchLogin',
@@ -55,7 +60,7 @@ export const logout = createAsyncThunk(
     }
 );
 
-type UserData = {
+export type UserDataType = {
     _id: string;
     email: string;
     name: string;
@@ -71,7 +76,7 @@ type UserData = {
     error?: string;
 }
 
-const userData = {} as UserData
+const userData = {} as UserDataType
 
 const slice = createSlice({
     name: "auth",
@@ -96,11 +101,6 @@ const slice = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.isLoggedIn = false
-            })
-
-            .addCase(changeUserName.fulfilled, (state, payload: any) => {
-                console.log(payload)
-                state.userData.name = payload.payload.updatedUser.name
             })
     }
 }

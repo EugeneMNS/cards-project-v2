@@ -10,7 +10,7 @@ import {TextField} from "@mui/material";
 
 
 export const ProfileInfo = () => {
-    const profile = useAppSelector((state) => state.auth.userData);
+    const profile = useAppSelector((state) => state.profile.userData);
     const [title, setTitle] = useState(profile.name)
 
     const [editProfileMode, setEditProfileMode] = useState(false);
