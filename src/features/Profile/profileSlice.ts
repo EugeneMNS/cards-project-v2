@@ -23,6 +23,23 @@ export const changeUserName = createAsyncThunk('profile/changeUserName', async (
     }
 })
 
+export const changeUserPhoto = createAsyncThunk('profile/changeUserPhoto', async (avatar: string) => {
+    //thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+    try {
+        const res = await profileAPI.changeProfilePhoto(avatar);
+        if (res.data.error === '') {
+            // thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
+            return res.data.updatedUser;
+
+        } else {
+            return res.data
+            //   return handleAsyncServerAppError(res.data, thunkAPI)
+        }
+    } catch (error) {
+        //  return handleAsyncServerNetworkError(error, thunkAPI)
+    }
+})
+
 
 const userData = {} as UserDataType
 
@@ -37,6 +54,9 @@ const slice = createSlice({
                 .addCase(changeUserName.fulfilled, (state, payload: any) => {
                     console.log(payload)
                     state.userData.name = payload.payload.updatedUser.name
+                })
+                .addCase(changeUserPhoto.fulfilled,(state,payload:any)=>{
+                    state.userData.avatar=payload.payload.updatedUser.avatar
                 })
                 .addCase(login.fulfilled, (state, payload: any) => {
                     state.userData = payload.payload

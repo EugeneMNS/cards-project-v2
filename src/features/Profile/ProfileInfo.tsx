@@ -3,7 +3,7 @@ import emptyProfilePhoto from '../../image/default-avatar.jpg'
 import pencil from '../../image/pencil.png'
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../redux/store";
-import { changeUserName} from "./profileSlice";
+import {changeUserName, changeUserPhoto} from "./profileSlice";
 import {TextField} from "@mui/material";
 
 
@@ -27,7 +27,9 @@ export const ProfileInfo = () => {
 
         if (newFile) {
             reader.onloadend = () => {
-              //  dispatch(changeProfilePhoto(reader.result)as any)
+                if (typeof reader.result === "string") {
+                    dispatch(changeUserPhoto(reader.result))
+                }
             }
             reader.readAsDataURL(newFile)
 
