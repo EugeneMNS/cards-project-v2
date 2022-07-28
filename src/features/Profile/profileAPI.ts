@@ -7,9 +7,6 @@ type ChangeNameAvatarPayloadType = {
 }
 
 export const profileAPI = {
-    me() {
-        return instance.post<UserDomainType>('auth/me', {});
-    },
     changeName(name: string) {
         return instance.put<{
             updatedUser: UserDomainType,
