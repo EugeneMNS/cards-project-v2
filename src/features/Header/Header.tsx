@@ -14,6 +14,8 @@ import {RequestStatusType} from "../../redux/appSlice";
 export const Header = () => {
 
     const dispatch = useAppDispatch()
+
+    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
     const [buttonActive, setButtonActive] = useState<'profile' | 'packs-list' | 'logout'>('profile')
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
 
@@ -32,7 +34,7 @@ export const Header = () => {
 
 
                 <div className={s.btnWrap}>
-                    <>
+                    {isInitialized && <>
                         <NavLink to={PACKS_LIST_PATH}>
                             <button className={
                                 buttonActive === 'packs-list'
@@ -80,6 +82,7 @@ export const Header = () => {
                             <span>Logout</span>
                         </button>
                     </>
+                    }
                 </div>
 
 

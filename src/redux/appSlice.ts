@@ -33,6 +33,7 @@ const slice = createSlice({
                 })
                 .addCase(login.fulfilled, (state) => {
                     state.status = 'succeeded'
+                    state.isInitialized = true
                 })
                 .addCase(login.rejected, (state) => {
                     state.status = 'failed'
@@ -42,6 +43,7 @@ const slice = createSlice({
                 })
                 .addCase(logout.fulfilled, (state) => {
                     state.status = 'succeeded'
+                    state.isInitialized = false
                 })
                 .addCase(logout.rejected, (state) => {
                     state.status = 'failed'
