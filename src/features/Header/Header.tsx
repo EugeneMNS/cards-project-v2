@@ -8,20 +8,21 @@ import React, {useEffect, useState} from 'react';
 import {logout} from "../Auth/auth-reducer";
 
 import {LinearProgress} from '@mui/material';
-import {useAppDispatch} from "../../redux/store";
+import {RootStateType, useAppDispatch, useAppSelector} from "../../redux/store";
+import {RequestStatusType} from "../../redux/appSlice";
 
 export const Header = () => {
 
     const dispatch = useAppDispatch()
     const [buttonActive, setButtonActive] = useState<'profile' | 'packs-list' | 'logout'>('profile')
-
+    const status = useAppSelector<RequestStatusType>((state)=>state.app.status)
 
     return (
         <div className={s.mainHeader}>
-            {/*{status === 'loading' && <div className={s.linearProgress}>
+            {status === 'loading' && <div className={s.linearProgress}>
                 <LinearProgress color={'info'}/>
             </div>
-            }*/}
+            }
             <div className={s.wrapper}>
 
 
