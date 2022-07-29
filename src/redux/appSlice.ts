@@ -22,7 +22,7 @@ const initialState: InitialAppStateType = {
         name: "app",
         initialState,
         reducers:{
-            setAppStatus: (state, action) => {
+            setAppStatus: (state, action: PayloadAction<{status: RequestStatusType}>) => {
                 state.status = action.payload.status
             }
         }
