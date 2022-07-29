@@ -15,7 +15,7 @@ export const Header = () => {
 
     const dispatch = useAppDispatch()
     const [buttonActive, setButtonActive] = useState<'profile' | 'packs-list' | 'logout'>('profile')
-    const status = useAppSelector<RequestStatusType>((state)=>state.app.status)
+    const status = useAppSelector<RequestStatusType>((state) => state.app.status)
 
     return (
         <div className={s.mainHeader}>
@@ -32,7 +32,7 @@ export const Header = () => {
 
 
                 <div className={s.btnWrap}>
-                        <>
+                    <>
                         <NavLink to={PACKS_LIST_PATH}>
                             <button className={
                                 buttonActive === 'packs-list'
@@ -40,8 +40,8 @@ export const Header = () => {
                                     : s.btn
                             }
                                     onClick={() => {
-                                      //  dispatch(setWithMyIdAC(false))
-                                      //  dispatch(setCardsPacksCountFromRangeAC([0, 1000]))
+                                        //  dispatch(setWithMyIdAC(false))
+                                        //  dispatch(setCardsPacksCountFromRangeAC([0, 1000]))
                                         // dispatch(changeLayoutAC('packs-list'))
                                         // dispatch(setSortPacksValueAC(null))
                                         // setButtonActive('packs-list')
@@ -57,8 +57,8 @@ export const Header = () => {
                                     : s.btn
                             }
                                     onClick={() => {
-                                      //  dispatch(setWithMyIdAC(true))
-                                      //  dispatch(setCardsPacksCountFromRangeAC([0, 1000]))
+                                        //  dispatch(setWithMyIdAC(true))
+                                        //  dispatch(setCardsPacksCountFromRangeAC([0, 1000]))
                                         // dispatch(changeLayoutAC('profile'))
                                         // dispatch(setSortPacksValueAC(null))
                                         // setButtonActive('profile')

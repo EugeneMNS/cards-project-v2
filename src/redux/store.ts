@@ -5,7 +5,7 @@ import {profileSlice} from "../features/Profile/profileSlice";
 import {appSlice} from "./appSlice";
 
 const store = configureStore({
-    reducer:{
+    reducer: {
         auth: authReducer,
         profile: profileSlice,
         app: appSlice,

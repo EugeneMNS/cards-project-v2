@@ -14,7 +14,7 @@ import {setAppStatus} from "../../redux/appSlice";
     }
 })*/
 
-export const checkAuthMe= createAsyncThunk(
+export const checkAuthMe = createAsyncThunk(
     'auth/checkAuthMe',
     (data: LoginParamsType, {rejectWithValue}) => {
         return authAPI.me().catch((error) => rejectWithValue(error))
@@ -23,23 +23,6 @@ export const checkAuthMe= createAsyncThunk(
 export const login = createAsyncThunk(
     'auth/fetchLogin',
     (data: LoginParamsType, {rejectWithValue}) => {
-        // dispatch(setAppStatus({status: 'loading'}))
-        /* try {
-             const res = await authAPI.auth(data);
-             dispatch(setUserData(res.data))
-             // dispatch(setAppStatus({status: 'succeeded'}))
-         } catch (e: any) {
-             const error = e.response
-                 ? e.response.data.error
-                 : (e.message + ', more details in the console');
-             console.log('Error: ', {...e})
-             dispatch(loginError(error))
-             // dispatch(setAppStatus({status: 'failed'}))
-         } finally {
-             //dispatch(setAppStatus({status: 'idle'}))
-         }*/
-
-
         return authAPI.auth(data).catch((error) => rejectWithValue(error))
     })
 
@@ -47,18 +30,8 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk(
     'auth/fetchLogout',
     async (_, {dispatch}) => {
-        dispatch(setAppStatus({status: 'loading'}))
-        try {
-            await authAPI.logout();
-            // dispatch(setIsInitialized({value:true}))
-            // dispatch(setIsLoggedIn({value:true}))
-             dispatch(setAppStatus({status: 'succeeded'}))
-        } catch (err: any) {
-            console.log(err)
-              dispatch(setAppStatus({status: 'failed'}))
-        } finally {
-             dispatch(setAppStatus({status: 'idle'}))
-        }
+        return await authAPI.logout();
+
     }
 );
 
@@ -78,38 +51,37 @@ export type UserDataType = {
     error?: string;
 }
 
-const userData = {} as UserDataType ;
+const userData = {} as UserDataType;
 
 const slice = createSlice({
-    name: "auth",
-    initialState: {
-        isLoggedIn: false,
-        isInitialized: false,
-        status: 'idle',
-        userData
-    },
-    reducers: {},
-    extraReducers: builder => {
-        builder
-            .addCase(login.fulfilled, (state, payload) => {
-                state.isLoggedIn = true
-                state.isInitialized = true
-                state.userData = payload.payload
+        name: "auth",
+        initialState: {
+            isLoggedIn: false,
+            isInitialized: false,
+            status: 'idle',
+            userData
+        },
+        reducers: {},
+        extraReducers: builder => {
+            builder
+                .addCase(login.fulfilled, (state, payload) => {
+                    state.isLoggedIn = true
+                    state.isInitialized = true
+                    state.userData = payload.payload
 
-            })
-            .addCase(login.rejected, (state, payload: any) => {
-                console.log(payload.payload.response.data.error)
-                state.userData.error = payload.payload.response.data.error
+                })
+                .addCase(login.rejected, (state, payload: any) => {
+                    console.log(payload.payload.response.data.error)
+                    state.userData.error = payload.payload.response.data.error
 
-            })
-            .addCase(logout.fulfilled, (state) => {
-                state.isLoggedIn = false
-                state.isInitialized = false
-                state.userData = {} as UserDataType
-            })
+                })
+                .addCase(logout.fulfilled, (state) => {
+                    state.isLoggedIn = false
+                    state.isInitialized = false
+                    state.userData = {} as UserDataType
+                })
+        }
     }
-}
-
 )
 
 export const {} = slice.actions
