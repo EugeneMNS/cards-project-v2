@@ -1,7 +1,8 @@
 import React from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
-import { ProfilePage } from "../features/Profile/ProfilePage";
-import {Login}  from "../features/Auth/Login";
+import {ProfilePage} from "../features/Profile/ProfilePage";
+import {Login} from "../features/Auth/Login";
+import RegistrationContainer from "../features/Registration/RegistrationContainer";
 
 export const SIGN_IN_PATH = '/login';
 export const REGISTER_PATH = '/register';
@@ -15,11 +16,12 @@ export const RoutesConst = () => {
     return (
         <div>
             <Routes>
-                <Route path="/" element={<ProfilePage/>} />
-    <Route path={SIGN_IN_PATH} element={<Login />} />
-    <Route path={PROFILE_PATH} element={<ProfilePage />} />
-    <Route path="*" element={<Navigate to='/404'/>} />
-    </Routes>
-    </div>
-);
+                <Route path="/" element={<ProfilePage/>}/>
+                <Route path={SIGN_IN_PATH} element={<Login/>}/>
+                <Route path={PROFILE_PATH} element={<ProfilePage/>}/>
+                <Route path={REGISTER_PATH} element={<RegistrationContainer/>}/>
+                <Route path="*" element={<Navigate to='/404'/>}/>
+            </Routes>
+        </div>
+    );
 };

@@ -7,6 +7,7 @@ import {login} from "./auth-reducer";
 import {useFormik} from "formik";
 import {Alert} from "@mui/material";
 import {Simulate} from "react-dom/test-utils";
+import {REGISTER_PATH} from "../../Routes/RoutesConst";
 
 
 
@@ -124,7 +125,7 @@ export const Login = () => {
             </form>
             <p className={style.textLight}>Don't have an account?</p>
             <div>
-                <NavLink className={style.linkBlue} to={'REGISTER_PATH'}>
+                <NavLink className={style.linkBlue} to={REGISTER_PATH}>
                     Sign Up
                 </NavLink>
             </div>
