@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import style from '../InitCommonStyle.module.css';
 import {Alert} from '@mui/material';
-//import {ErrorSnackbar} from '../common/Error/ErrorSnackbar';
+import {ErrorSnackbar} from '../../common/Error/ErrorSnackbar'
 import {NavLink} from 'react-router-dom';
 import {SIGN_IN_PATH} from '../../Routes/RoutesConst';
 
@@ -129,7 +129,7 @@ const Register = (props: RegisterPropsType) => {
             </NavLink>
         </div>
 
-       {/* <ErrorSnackbar/>*/}
+        <ErrorSnackbar/>
     </div>;
 }
 

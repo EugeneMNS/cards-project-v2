@@ -24,6 +24,9 @@ const slice = createSlice({
         reducers: {
             setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
                 state.status = action.payload.status
+            },
+            setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
+                state.error = action.payload.error
             }
         },
         extraReducers: builder => {
@@ -62,5 +65,5 @@ const slice = createSlice({
     }
 )
 
-export const {setAppStatus} = slice.actions
+export const {setAppStatus, setAppError} = slice.actions
 export const appSlice = slice.reducer
