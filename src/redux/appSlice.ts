@@ -28,22 +28,22 @@ const slice = createSlice({
         },
         extraReducers: builder => {
             builder
-                .addCase(login.pending, (state, action) => {
+                .addCase(login.pending, (state) => {
                     state.status = 'loading'
                 })
-                .addCase(login.fulfilled, (state, action) => {
+                .addCase(login.fulfilled, (state) => {
                     state.status = 'succeeded'
                 })
-                .addCase(login.rejected, (state, action) => {
+                .addCase(login.rejected, (state) => {
                     state.status = 'failed'
                 })
-                .addCase(logout.pending, (state, action) => {
+                .addCase(logout.pending, (state) => {
                     state.status = 'loading'
                 })
-                .addCase(logout.fulfilled, (state, action) => {
+                .addCase(logout.fulfilled, (state) => {
                     state.status = 'succeeded'
                 })
-                .addCase(logout.rejected, (state, action) => {
+                .addCase(logout.rejected, (state) => {
                     state.status = 'failed'
                 })
 
