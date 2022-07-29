@@ -16,7 +16,7 @@ import {setAppStatus} from "../../redux/appSlice";
 
 export const checkAuthMe = createAsyncThunk(
     'auth/checkAuthMe',
-    (data: LoginParamsType, {rejectWithValue}) => {
+    (_, {rejectWithValue}) => {
         return authAPI.me().catch((error) => rejectWithValue(error))
     })
 

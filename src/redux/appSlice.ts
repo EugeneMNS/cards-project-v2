@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {login, logout} from "../features/Auth/auth-reducer";
-import {log} from "util";
+import {checkAuthMe, login, logout} from "../features/Auth/auth-reducer";
+
 
 type InitialAppStateType = {
     status: RequestStatusType
@@ -12,7 +12,7 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 
 const initialState: InitialAppStateType = {
-    status: 'idle',
+    status: 'loading',
     error: null,
     isInitialized: false
 };
@@ -44,6 +44,15 @@ const slice = createSlice({
                     state.status = 'succeeded'
                 })
                 .addCase(logout.rejected, (state) => {
+                    state.status = 'failed'
+                })
+                .addCase(checkAuthMe.pending, (state) => {
+                    state.status = 'loading'
+                })
+                .addCase(checkAuthMe.fulfilled, (state) => {
+                    state.status = 'succeeded'
+                })
+                .addCase(checkAuthMe.rejected, (state) => {
                     state.status = 'failed'
                 })
 
