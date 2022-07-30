@@ -56,6 +56,7 @@ const slice = createSlice({
                 })
                 .addCase(checkAuthMe.fulfilled, (state) => {
                     state.status = 'succeeded'
+                    state.isInitialized = true
                 })
                 .addCase(checkAuthMe.rejected, (state) => {
                     state.status = 'failed'

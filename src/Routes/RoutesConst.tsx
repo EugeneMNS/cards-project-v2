@@ -3,6 +3,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {ProfilePage} from "../features/Profile/ProfilePage";
 import {Login} from "../features/Auth/Login";
 import RegistrationContainer from "../features/Registration/RegistrationContainer";
+import {PacksList} from "../features/PacksList/PacksList";
 
 export const SIGN_IN_PATH = '/login';
 export const REGISTER_PATH = '/register';
@@ -20,6 +21,7 @@ export const RoutesConst = () => {
                 <Route path={SIGN_IN_PATH} element={<Login/>}/>
                 <Route path={PROFILE_PATH} element={<ProfilePage/>}/>
                 <Route path={REGISTER_PATH} element={<RegistrationContainer/>}/>
+                <Route path={PACKS_LIST_PATH} element={<PacksList/>}/>
                 <Route path="*" element={<Navigate to='/404'/>}/>
             </Routes>
         </div>

@@ -80,6 +80,10 @@ const slice = createSlice({
                     state.isInitialized = false
                     state.userData = {} as UserDataType
                 })
+                .addCase(checkAuthMe.fulfilled,(state)=>{
+                    state.isInitialized = true
+                    state.isLoggedIn = true
+                })
         }
     }
 )

@@ -61,6 +61,9 @@ const slice = createSlice({
                 .addCase(login.fulfilled, (state, payload: any) => {
                     state.userData = payload.payload
                 })
+                .addCase(checkAuthMe.fulfilled, (state, payload: any) => {
+                    state.userData = payload.payload.data
+                })
                 .addCase(logout.fulfilled, (state) => {
                     state.userData = {} as UserDataType
                 })
