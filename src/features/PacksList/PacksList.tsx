@@ -3,6 +3,8 @@ import s from '../Profile/Profile.module.css'
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {useAppSelector} from "../../redux/store";
+import {Title} from "../../common/Title/Title";
+import {TableContainer} from "../../common/Table/TableContainer";
 
 export const PacksList = () => {
     const isInitialized = useAppSelector< boolean>((state) => state.app.isInitialized);
@@ -20,9 +22,9 @@ export const PacksList = () => {
             </div>
 
             <div className={s.profile__main}>
-                {/*<Title value={'Packs list'}/>
+                <Title/>
                 <TableContainer/>
-                <PaginationPacksContainer/>*/}
+                {/*  <PaginationPacksContainer/>*/}
             </div>
             {/*<ErrorSnackbar/>*/}
         </div>
