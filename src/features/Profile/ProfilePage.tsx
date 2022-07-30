@@ -3,6 +3,7 @@ import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo';
 import {RootStateType, useAppDispatch, useAppSelector} from "../../redux/store";
 import {Navigate} from "react-router-dom";
+import {TableContainer} from "../../common/Table/TableContainer";
 
 
 export const ProfilePage = () => {
@@ -25,6 +26,7 @@ export const ProfilePage = () => {
 
             <div className={s.profile__main}>
                 <h2>My packs list</h2>
+                <TableContainer/>
             </div>
         </div>
     );
