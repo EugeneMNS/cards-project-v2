@@ -11,6 +11,8 @@ export const TableContainer = () => {
         <div className={s.table_container}>
             <div className={s.Table__top}>
                 <SearchPacksContainer/>
+                <button className={s.add}
+                        onClick={() => {}}> Add new pack</button>
             </div>
 
         </div>
