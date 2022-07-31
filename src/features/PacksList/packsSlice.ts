@@ -35,8 +35,8 @@ const initialPacksState: InitialStateType = {
 
 export const getPacks = createAsyncThunk(
     'packs/get',
-    (data: PacksType, {rejectWithValue}) => {
-        return packsAPI.getPacks(data).catch((error) => rejectWithValue(error))
+    async (_, {rejectWithValue}) => {
+        return  await packsAPI.getPacks().catch((error) => rejectWithValue(error))
     })
 
 
