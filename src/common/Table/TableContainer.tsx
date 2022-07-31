@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import s from './Table.module.scss';
 import SearchPacksContainer from "../Search/SearchPacksContainer";
+import {Table} from "./Table";
 
 
 
@@ -14,6 +15,8 @@ export const TableContainer = () => {
                 <button className={s.add}
                         onClick={() => {}}> Add new pack</button>
             </div>
+
+            <Table/>
 
         </div>
 
