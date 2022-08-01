@@ -8,6 +8,7 @@ import {TableContainer} from "../../common/Table/TableContainer";
 import {getPacks} from "./packsSlice";
 import {PaginationPacksContainer} from "../../common/Pagination/PaginationPacksContainer";
 import {SortingPacksType} from "./packsAPI";
+import {ChooseOwner} from "./ChooseOwner/ChooseOwner";
 
 export const PacksList = () => {
     const dispatch = useAppDispatch()
@@ -22,15 +23,18 @@ export const PacksList = () => {
 
     useEffect(() => {
         if (isInitialized) {
+
             dispatch(getPacks({}))}
-    },[withMyId,
+    },[
+        withMyId,
         page,
         pageCount,
         cardsValuesFromRange,
         packName,
         sortingBy,
         dispatch,
-        isInitialized])
+        isInitialized
+    ])
 
     if (!isInitialized) {
         return <Navigate to={'/login'}/>;
@@ -39,7 +43,7 @@ export const PacksList = () => {
         <div className={s.container}>
             <div className={s.profile__info}>
                 <div className={s.profile__ChooseOwner}>
-                    {/* <ChooseOwner/>*/}
+                    <ChooseOwner/>
                 </div>
                 {/* <RangeSliderContainer/>
                 <Sorting/>*/}
