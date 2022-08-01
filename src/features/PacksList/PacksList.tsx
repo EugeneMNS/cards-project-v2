@@ -6,15 +6,31 @@ import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {Title} from "../../common/Title/Title";
 import {TableContainer} from "../../common/Table/TableContainer";
 import {getPacks} from "./packsSlice";
+import {PaginationPacksContainer} from "../../common/Pagination/PaginationPacksContainer";
+import {SortingPacksType} from "./packsAPI";
 
 export const PacksList = () => {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized);
+    const withMyId = useAppSelector<boolean>(state => state.packs.initialPacksState.withMyId)
+    const page = useAppSelector<number>(state => state.packs.initialPacksState.page)
+    const sortingBy = useAppSelector<SortingPacksType | ''>(state => state.packs.initialPacksState.sortingBy)
+    const packName = useAppSelector<string>(state => state.packs.initialPacksState.packName)
+    const pageCount = useAppSelector<number>(state => state.packs.initialPacksState.pageCount)
+    const cardsValuesFromRange = useAppSelector<Array<number>>((state) =>
+        state.packs.initialPacksState.cardsValuesFromRange);
 
     useEffect(() => {
         if (isInitialized) {
             dispatch(getPacks({}))}
-    },[])
+    },[withMyId,
+        page,
+        pageCount,
+        cardsValuesFromRange,
+        packName,
+        sortingBy,
+        dispatch,
+        isInitialized])
 
     if (!isInitialized) {
         return <Navigate to={'/login'}/>;
@@ -32,7 +48,7 @@ export const PacksList = () => {
             <div className={s.profile__main}>
                 <Title/>
                 <TableContainer/>
-                {/*  <PaginationPacksContainer/>*/}
+                <PaginationPacksContainer/>
             </div>
             {/*<ErrorSnackbar/>*/}
         </div>

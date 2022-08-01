@@ -61,10 +61,10 @@ const slice = createSlice({
         },
         reducers: {
             updatePage: (state, action) => {
-                state.initialPacksState.page = action.payload.page;
+                state.initialPacksState.page = action.payload;
             },
             updatePageCount: (state, action) => {
-                state.initialPacksState.pageCount = action.payload.pageCount;
+                state.initialPacksState.pageCount = action.payload;
             }
         },
         extraReducers: builder => {
@@ -76,5 +76,5 @@ const slice = createSlice({
     }
 )
 
-export const {} = slice.actions
+export const {updatePage, updatePageCount} = slice.actions
 export const packsSlice = slice.reducer

@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {checkAuthMe, login, logout} from "../features/Auth/auth-reducer";
+import {getPacks} from "../features/PacksList/packsSlice";
 
 
 type InitialAppStateType = {
@@ -61,6 +62,16 @@ const slice = createSlice({
                 .addCase(checkAuthMe.rejected, (state) => {
                     state.status = 'failed'
                 })
+                .addCase(getPacks.pending, (state) => {
+                    state.status = 'loading'
+                })
+                .addCase(getPacks.fulfilled, (state) => {
+                    state.status = 'succeeded'
+                })
+                .addCase(getPacks.rejected, (state) => {
+                    state.status = 'failed'
+                })
+
 
         }
     }
