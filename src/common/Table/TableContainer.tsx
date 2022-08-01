@@ -8,7 +8,8 @@ import {CardPacksType} from "../../features/PacksList/packsAPI";
 
 
 export const TableContainer = () => {
-    const packsList = useAppSelector<CardPacksType[]>((state)=>state.packs.initialPacksState.cardPacks)
+    const packsList = useAppSelector<CardPacksType[]>((state)=>
+        state.packs.initialPacksState.cardPacks)
     const userId = useAppSelector<string>((state)=>state.profile.userData._id)
 
     const editModeOn = ()=>{}
@@ -22,11 +23,14 @@ export const TableContainer = () => {
                         onClick={() => {}}> Add new pack</button>
             </div>
 
-            <Table packsList={packsList}
-                   userId={userId}
-                   deleteModeOn={deleteModeOn}
-                   editModeOn={editModeOn}
+            {packsList[0]
+                ?<Table packsList={packsList}
+                    userId={userId}
+                    deleteModeOn={deleteModeOn}
+                    editModeOn={editModeOn}
             />
+                :<div className={s.noItemText}>There are no packs. Click add new pack to create.</div>
+            }
 
         </div>
 

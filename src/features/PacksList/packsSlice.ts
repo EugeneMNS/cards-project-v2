@@ -1,7 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {authAPI, LoginParamsType} from "../Auth/authAPI";
 import {CardPacksType, packsAPI, PacksType, SortingPacksType} from "./packsAPI";
-import {checkAuthMe, login, logout, UserDataType} from "../Auth/auth-reducer";
 import {RootStateType} from "../../redux/store";
 
 
@@ -22,7 +20,7 @@ export type InitialStateType = {
 
 const initialPacksState: InitialStateType = {
     cardPacks: [] as CardPacksType[],
-    cardPacksTotalCount: 1,
+    cardPacksTotalCount: 0,
     maxCardsCount: Infinity as number,
     minCardsCount: 0,
     page: 1,
@@ -41,7 +39,7 @@ export const getPacks = createAsyncThunk(
         let params = new URL (document.location.href.replace('#', '/')).searchParams
         let url_user_id = params.get('userId')
         const { withMyId, pageCount, page, sortingBy } = state.packs.initialPacksState
-        const user_id = state.profile.userData?._id || false
+        //const user_id = state.profile.userData?._id || false
         const packName = state.packs.initialPacksState.packName // for search?
         const finalPayload = {
             pageCount,
@@ -49,7 +47,7 @@ export const getPacks = createAsyncThunk(
             sortingBy,
             ...payload,
         }
-        withMyId && user_id && (finalPayload.user_id = user_id)
+       // withMyId && user_id && (finalPayload.user_id = user_id)
         packName && (finalPayload.packName = packName)
         url_user_id && (finalPayload.user_id = url_user_id)
         return  await packsAPI.getPacks({...finalPayload}).catch((error) => rejectWithValue(error))
@@ -61,7 +59,14 @@ const slice = createSlice({
         initialState: {
             initialPacksState,
         },
-        reducers: {},
+        reducers: {
+            updatePage: (state, action) => {
+                state.initialPacksState.page = action.payload.page;
+            },
+            updatePageCount: (state, action) => {
+                state.initialPacksState.pageCount = action.payload.pageCount;
+            }
+        },
         extraReducers: builder => {
             builder
                 .addCase(getPacks.fulfilled, (state, payload) => {

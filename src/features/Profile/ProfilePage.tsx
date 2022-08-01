@@ -26,7 +26,7 @@ export const ProfilePage = () => {
 
             <div className={s.profile__main}>
                 <h2>My packs list</h2>
-                <TableContainer/>
+               {/* <TableContainer/>*/}
             </div>
         </div>
     );
