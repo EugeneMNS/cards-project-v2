@@ -13,6 +13,7 @@ export const PacksList = () => {
 
     useEffect(() => {
         if (isInitialized) {
+            // @ts-ignore
             dispatch(getPacks())}
     },[])
 

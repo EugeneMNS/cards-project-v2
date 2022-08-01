@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType} from "../Auth/authAPI";
 import {CardPacksType, packsAPI, PacksType, SortingPacksType} from "./packsAPI";
 import {checkAuthMe, login, logout, UserDataType} from "../Auth/auth-reducer";
+import {RootStateType} from "../../redux/store";
 
 
 export type InitialStateType = {
@@ -35,8 +36,23 @@ const initialPacksState: InitialStateType = {
 
 export const getPacks = createAsyncThunk(
     'packs/get',
-    async (_, {rejectWithValue}) => {
-        return  await packsAPI.getPacks().catch((error) => rejectWithValue(error))
+    async (payload:PacksType, {getState,rejectWithValue}) => {
+        const state = getState() as RootStateType;
+        let params = new URL (document.location.href.replace('#', '/')).searchParams
+        let url_user_id = params.get('userId')
+        const { withMyId, pageCount, page, sortingBy } = state.packs.initialPacksState
+        const user_id = state.profile.userData?._id || false
+        const packName = state.packs.initialPacksState.packName // for search?
+        const finalPayload = {
+            pageCount,
+            page,
+            sortingBy,
+            ...payload,
+        }
+        withMyId && user_id && (finalPayload.user_id = user_id)
+        packName && (finalPayload.packName = packName)
+        url_user_id && (finalPayload.user_id = url_user_id)
+        return  await packsAPI.getPacks({...finalPayload}).catch((error) => rejectWithValue(error))
     })
 
 
