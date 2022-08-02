@@ -12,8 +12,6 @@ export type InitialStateType = {
     page: number
     pageCount: number
     packName: string
-    cardsValuesFromRange: Array<number>
-    withMyId: boolean
     // sortingBy: null | SortingPacksType
     sortingBy: "" | SortingPacksType
 }
@@ -26,8 +24,6 @@ const initialPacksState: InitialStateType = {
     page: 1,
     pageCount: 10,
     packName: '', //for search
-    cardsValuesFromRange: [0, 1000],
-    withMyId: true,
     sortingBy: "" ,
 };
 
@@ -36,21 +32,40 @@ export const getPacks = createAsyncThunk(
     'packs/get',
     async (payload:PacksType, {getState,rejectWithValue}) => {
         const state = getState() as RootStateType;
-        const {pageCount, page } = state.packs.initialPacksState
-        //const user_id = state.profile.userData?._id || false
-        const packName = state.packs.initialPacksState.packName // for search?
-        const finalPayload = {
-            pageCount,
-            page,
-            ...payload,
-        }
-        return  await packsAPI.getPacks({...finalPayload}).catch((error) => rejectWithValue(error))
+        const { page,pageCount, packName, sortingBy } = state.packs.initialPacksState
+        const {withMyId}= state.packs
+        const {cardsValuesFromRange}= state.packs
+        const user_id = state.profile.userData?._id
+        //const packName = state.packs.initialPacksState.packName // for search?
+        let mainPayload = withMyId
+            ? {
+                user_id: user_id,
+                page: page,
+                pageCount: pageCount,
+                min: cardsValuesFromRange[0],
+                max: cardsValuesFromRange[1],
+                packName: packName,
+            }
+            : {
+                page: page,
+                pageCount:  pageCount,
+                min: cardsValuesFromRange[0],
+                max: cardsValuesFromRange[1],
+                packName: packName,
+            }
+        if (sortingBy) { // @ts-ignore
+            mainPayload = {...mainPayload, sortPacks: sortingBy}}
+        //withMyId && user_id && (finalPayload.user_id = user_id)
+        //packName && (finalPayload.packName = packName)
+        // url_user_id && (finalPayload.user_id = url_user_id)
+        return  await packsAPI.getPacks({...mainPayload, ...payload}).catch((error) => rejectWithValue(error))
     })
-
 
 const slice = createSlice({
         name: "packs",
         initialState: {
+            withMyId: false,
+            cardsValuesFromRange: [0, 1000],
             initialPacksState,
         },
         reducers: {
@@ -61,10 +76,10 @@ const slice = createSlice({
                 state.initialPacksState.pageCount = action.payload;
             },
             setWithMyId: (state,action)=>{
-                state.initialPacksState.withMyId = action.payload
+                state.withMyId = action.payload
             },
             setCardsPacksCountFromRange: (state,action)=>{
-                state.initialPacksState.cardsValuesFromRange = action.payload
+                state.cardsValuesFromRange = action.payload
             },
             setSortPacksValue: (state,action)=>{
                 state.initialPacksState.sortingBy = action.payload

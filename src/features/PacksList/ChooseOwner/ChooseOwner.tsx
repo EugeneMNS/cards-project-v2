@@ -5,7 +5,7 @@ import React from 'react';
 
 export const ChooseOwner = () => {
     const dispatch = useAppDispatch()
-    const withMyId = useAppSelector<boolean>(state => state.packs.initialPacksState.withMyId)
+    const withMyId = useAppSelector<boolean>(state => state.packs.withMyId)
 
     return <div className={s.ChooseOwner}>
         <div className={s.Choose__text}><b>Show packs cards</b></div>
@@ -17,7 +17,7 @@ export const ChooseOwner = () => {
                 onClick={() => {
                     dispatch(setWithMyId(true))
                     dispatch(setCardsPacksCountFromRange([0,1000]))
-                    dispatch(setSortPacksValue(""))
+
                 }
                 }>My
         </button>

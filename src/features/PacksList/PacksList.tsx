@@ -14,13 +14,13 @@ import {RangeSliderContainer} from "../../common/RangeSlider/RangeSliderContaine
 export const PacksList = () => {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized);
-    const withMyId = useAppSelector<boolean>(state => state.packs.initialPacksState.withMyId)
+    const withMyId = useAppSelector<boolean>(state => state.packs.withMyId)
     const page = useAppSelector<number>(state => state.packs.initialPacksState.page)
     const sortingBy = useAppSelector<SortingPacksType | ''>(state => state.packs.initialPacksState.sortingBy)
     const packName = useAppSelector<string>(state => state.packs.initialPacksState.packName)
     const pageCount = useAppSelector<number>(state => state.packs.initialPacksState.pageCount)
     const cardsValuesFromRange = useAppSelector<Array<number>>((state) =>
-        state.packs.initialPacksState.cardsValuesFromRange);
+        state.packs.cardsValuesFromRange);
 
     useEffect(() => {
         if (isInitialized) {
