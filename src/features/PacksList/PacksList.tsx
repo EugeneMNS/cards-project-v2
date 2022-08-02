@@ -9,6 +9,7 @@ import {getPacks} from "./packsSlice";
 import {PaginationPacksContainer} from "../../common/Pagination/PaginationPacksContainer";
 import {SortingPacksType} from "./packsAPI";
 import {ChooseOwner} from "./ChooseOwner/ChooseOwner";
+import {RangeSliderContainer} from "../../common/RangeSlider/RangeSliderContainer";
 
 export const PacksList = () => {
     const dispatch = useAppDispatch()
@@ -45,8 +46,8 @@ export const PacksList = () => {
                 <div className={s.profile__ChooseOwner}>
                     <ChooseOwner/>
                 </div>
-                {/* <RangeSliderContainer/>
-                <Sorting/>*/}
+                <RangeSliderContainer/>
+               {/* <Sorting/>*/}
             </div>
 
             <div className={s.profile__main}>

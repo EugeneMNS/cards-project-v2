@@ -36,33 +36,15 @@ export const getPacks = createAsyncThunk(
     'packs/get',
     async (payload:PacksType, {getState,rejectWithValue}) => {
         const state = getState() as RootStateType;
-       // let params = new URL (document.location.href.replace('#', '/')).searchParams
-        //let url_user_id = params.get('userId')
-        const { page,pageCount, cardsValuesFromRange, packName, withMyId, sortingBy } = state.packs.initialPacksState
-        const user_id = state.profile.userData?._id
-        //const packName = state.packs.initialPacksState.packName // for search?
-        let mainPayload = withMyId
-            ? {
-                user_id: user_id,
-                page,
-                pageCount,
-                min: cardsValuesFromRange[0],
-                max: cardsValuesFromRange[1],
-                packName: packName,
-            }
-            : {
-                page,
-                pageCount,
-                min: cardsValuesFromRange[0],
-                max: cardsValuesFromRange[1],
-                packName: packName,
-            }
-        if (sortingBy) { // @ts-ignore
-            mainPayload = {...mainPayload, sortPacks: sortingBy}}
-        //withMyId && user_id && (finalPayload.user_id = user_id)
-        //packName && (finalPayload.packName = packName)
-       // url_user_id && (finalPayload.user_id = url_user_id)
-        return  await packsAPI.getPacks({...mainPayload, ...payload}).catch((error) => rejectWithValue(error))
+        const {pageCount, page } = state.packs.initialPacksState
+        //const user_id = state.profile.userData?._id || false
+        const packName = state.packs.initialPacksState.packName // for search?
+        const finalPayload = {
+            pageCount,
+            page,
+            ...payload,
+        }
+        return  await packsAPI.getPacks({...finalPayload}).catch((error) => rejectWithValue(error))
     })
 
 
