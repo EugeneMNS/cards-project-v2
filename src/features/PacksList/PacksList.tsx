@@ -17,7 +17,7 @@ export const PacksList = () => {
     const withMyId = useAppSelector<boolean>(state => state.packs.withMyId)
     const page = useAppSelector<number>(state => state.packs.initialPacksState.page)
     const sortingBy = useAppSelector<SortingPacksType | ''>(state => state.packs.initialPacksState.sortingBy)
-    const packName = useAppSelector<string>(state => state.packs.initialPacksState.packName)
+    const packName = useAppSelector<string>(state => state.packs.packName)
     const pageCount = useAppSelector<number>(state => state.packs.initialPacksState.pageCount)
     const cardsValuesFromRange = useAppSelector<Array<number>>((state) =>
         state.packs.cardsValuesFromRange);
@@ -25,8 +25,9 @@ export const PacksList = () => {
     useEffect(() => {
         if (isInitialized) {
 
-            dispatch(getPacks({}))}
-    },[
+            dispatch(getPacks({}))
+        }
+    }, [
         withMyId,
         page,
         pageCount,
@@ -47,7 +48,7 @@ export const PacksList = () => {
                     <ChooseOwner/>
                 </div>
                 <RangeSliderContainer/>
-               {/* <Sorting/>*/}
+                {/* <Sorting/>*/}
             </div>
 
             <div className={s.profile__main}>
