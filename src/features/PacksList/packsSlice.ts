@@ -13,6 +13,7 @@ export type InitialStateType = {
     pageCount: number
     // sortingBy: null | SortingPacksType
     sortingBy: "" | SortingPacksType
+    layout: 'profile' | 'packs-list'
 }
 
 const initialPacksState: InitialStateType = {
@@ -23,6 +24,7 @@ const initialPacksState: InitialStateType = {
     page: 1,
     pageCount: 10,
     sortingBy: "",
+    layout: 'profile',
 };
 
 
@@ -65,6 +67,7 @@ const slice = createSlice({
             withMyId: false,
             cardsValuesFromRange: [0, 1000],
             packName: '',
+            layout: 'profile',
             initialPacksState,
         },
         reducers: {

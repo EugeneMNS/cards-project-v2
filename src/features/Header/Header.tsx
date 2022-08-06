@@ -10,14 +10,20 @@ import {logout} from "../Auth/auth-reducer";
 import {LinearProgress} from '@mui/material';
 import {RootStateType, useAppDispatch, useAppSelector} from "../../redux/store";
 import {RequestStatusType} from "../../redux/appSlice";
+import {setWithMyId} from "../PacksList/packsSlice";
 
 export const Header = () => {
 
     const dispatch = useAppDispatch()
 
     const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
-    const [buttonActive, setButtonActive] = useState<'profile' | 'packs-list' | 'logout'>('profile')
+    const layout = useAppSelector<string>(state => state.packs.layout)
+    const [buttonActive, setButtonActive] = useState<string>(layout)
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
+
+    useEffect(() => {
+        setButtonActive(layout)
+    }, [layout])
 
     return (
         <div className={s.mainHeader}>
@@ -42,11 +48,11 @@ export const Header = () => {
                                     : s.btn
                             }
                                     onClick={() => {
-                                        //  dispatch(setWithMyIdAC(false))
+                                          dispatch(setWithMyId(false))
                                         //  dispatch(setCardsPacksCountFromRangeAC([0, 1000]))
                                         // dispatch(changeLayoutAC('packs-list'))
                                         // dispatch(setSortPacksValueAC(null))
-                                        // setButtonActive('packs-list')
+                                         setButtonActive('packs-list')
                                     }}>
                                 <img className={s.btnImg} src={PackListIcon} alt="PacksListIcon"/>
                                 <span>Packs List</span>
@@ -59,11 +65,11 @@ export const Header = () => {
                                     : s.btn
                             }
                                     onClick={() => {
-                                        //  dispatch(setWithMyIdAC(true))
+                                        dispatch(setWithMyId(true))
                                         //  dispatch(setCardsPacksCountFromRangeAC([0, 1000]))
                                         // dispatch(changeLayoutAC('profile'))
                                         // dispatch(setSortPacksValueAC(null))
-                                        // setButtonActive('profile')
+                                         setButtonActive('profile')
                                     }}>
                                 <img className={s.btnImg} src={ProfileIcon} alt="ProfileIcon"/>
                                 <span>Profile</span>
