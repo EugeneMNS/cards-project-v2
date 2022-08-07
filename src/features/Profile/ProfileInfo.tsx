@@ -7,8 +7,6 @@ import {changeUserName, changeUserPhoto} from "./profileSlice";
 import {TextField} from "@mui/material";
 
 
-
-
 export const ProfileInfo = () => {
     const profile = useAppSelector((state) => state.profile.userData);
     const [title, setTitle] = useState(profile.name)

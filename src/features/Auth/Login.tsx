@@ -101,7 +101,7 @@ export const Login = () => {
           </span>
                     )}
                     <div className={s.CheckBoxWrapper}>
-                        <div>
+
                             <label className={s.CheckBoxLabel}>
                                 <input
                                     type="checkbox"
@@ -111,7 +111,7 @@ export const Login = () => {
                                 />
                                 Remember me
                             </label>
-                        </div>
+
                     </div>
                 </div>
                 <div>
